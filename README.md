@@ -1,5 +1,6 @@
 # LeapMouse
 This software does **not** work with the orion beta.
+
 Both Windows and Linux are supported.
 ## Setup
 download and run setup.sh:
