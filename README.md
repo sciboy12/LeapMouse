@@ -7,7 +7,9 @@ Both Windows and Linux are supported.
 ## Setup
 
 ### Linux
-download and run setup.sh:
+Download and run setup.sh:
+
+Note that this script only works on Ubuntu/Debian-based distros.
 ```
 wget https://github.com/sciboy12/LeapMouse/raw/master/setup.sh
 chmod +x setup.sh
