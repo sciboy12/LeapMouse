@@ -21,3 +21,6 @@ todo
 
 ## Config file settings
 todo
+
+## TODO
+Further improve error handlng regarding corrupt config files
