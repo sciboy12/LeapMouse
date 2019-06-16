@@ -3,7 +3,7 @@ Use your Leap Motion as an absolute-mode air mouse
 
 This software does **not** work with the Orion Beta, nor Python 3.
 
-Both Windows and Linux are supported.
+Both Windows and Linux are supported (Though Windows support is broken ATM, which will be fixed soon).
 
 ## Setup
 
