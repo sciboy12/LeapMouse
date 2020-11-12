@@ -1,5 +1,5 @@
 from __future__ import division
-import math, ConfigParser, ctypes, os.path
+import math, configparser, ctypes, os.path
 import platform
 import math
 import sys
@@ -35,11 +35,11 @@ elif system == 'Linux':
     sync=display.sync
 # Get screen resolution
 
-config = ConfigParser.RawConfigParser()
+config = configparser.RawConfigParser()
 
 # Check for presence of config.ini
 if not os.path.isfile("config.ini"):
-    config = ConfigParser.SafeConfigParser()
+    config = configparser.ConfigParser()
     config.add_section('mode')
     config.set('mode', 'modeSetting', '0')
     
@@ -51,12 +51,12 @@ if not os.path.isfile("config.ini"):
     config.set('mode_1', 'screen_width', '264')
     config.set('mode_1', 'offset', '10')
     # Create config.ini with above settings
-    with open('config.ini', 'wb') as configfile:
+    with open('config.ini', 'w') as configfile:
         config.write(configfile)
-    print "Config file created"
+    print("Config file created")
 
 config.read('config.ini')
-print "Config file loaded"
+print("Config file loaded")
 # ---Config---
 # Area to map to the screen, measured in mm
 # Height(NOT display height) is determined automatically based on display ratio
@@ -117,9 +117,9 @@ if mode == 0:
     screen_width_final = screen_width
     screen_height_final = screen_height
     offset_final = offset_0
-    print "Display resolution is",screen_width,"x",screen_height,"pixels."
-    print "Active area width is",screen_mm_0,"mm"
-    print "Y offset is",offset_0,"mm"
+    print("Display resolution is",screen_width,"x",screen_height,"pixels.")
+    print("Active area width is",screen_mm_0,"mm")
+    print("Y offset is",offset_0,"mm")
     
 elif mode == 1:
     sensitivity_y = (screen_height/screen_width)*screen_mm_1
@@ -127,9 +127,9 @@ elif mode == 1:
     screen_width_final = screen_width
     screen_height_final = screen_height
     offset_final = offset_1
-    print "Display resolution is",screen_width,"x",screen_height,"pixels."
-    print "Active area width is",screen_mm_1,"mm"
-    print "Y offset is",offset_1,"mm"
+    print("Display resolution is",screen_width,"x",screen_height,"pixels.")
+    print("Active area width is",screen_mm_1,"mm")
+    print("Y offset is",offset_1,"mm")
     
     '''
     elif mode == "5inch":
@@ -145,11 +145,11 @@ elif mode == 1:
     '''
 
 else:
-    print "Invalid mapping - Please ensure line 11 in LeapMouse.py is set to one of the following strings."
-    print "---------------------------------------------------------------------------"
-    print "\"full\" - maps the Leap to match your screen size."
-    print "\"mini\" - maps the Leap to a width twice to the width of the sensor(2*80mm)."
-    print "Press any key to continue."
+    print("Invalid mapping - Please ensure line 11 in LeapMouse.py is set to one of the following strings.")
+    print("---------------------------------------------------------------------------")
+    print("\"full\" - maps the Leap to match your screen size.")
+    print("\"mini\" - maps the Leap to a width twice to the width of the sensor(2*80mm).")
+    print("Press any key to continue.")
     #controller.remove_listener(listener)
     #keyboard.sleep()
     exit()
@@ -157,17 +157,17 @@ else:
 class SampleListener(Leap.Listener):
     
     def on_init(self, controller):
-        print "Initialized"
+        print("Initialized")
 
     def on_connect(self, controller):
-        print "Connected"
+        print("Connected")
         
     def on_disconnect(self, controller):
         # Note: not dispatched when running in a debugger.
-        print "Disconnected"
+        print("Disconnected")
 
     def on_exit(self, controller):
-        print "Exited"
+        print("Exited")
 
     def on_frame(self, controller):
         frame = controller.frame()
@@ -230,7 +230,7 @@ def main():
     controller.add_listener(listener)
 
     # Keep this process running until Enter is pressed
-    print "Press Enter to quit..."
+    print("Press Enter to quit...")
     try:
         sys.stdin.readline()
     except KeyboardInterrupt:
