@@ -5,6 +5,7 @@ import os
 import Leap
 from numpy import interp
 from math import atan2, degrees
+from pathlib import Path
 
 def do_nothing():
     pass
@@ -29,26 +30,27 @@ if system == 'Linux':
     res=scr.get_geometry()
     screen_width=res.width
     screen_height=res.height
-    sync=display.sync
     set_pos = scr.warp_pointer
+    sync=display.sync
 
 # Check for presence of config.ini
 config = configparser.RawConfigParser()
-if not os.path.isfile("config.ini"):
+config_path = os.path.join(os.path.dirname(__file__), 'config.ini')
+
+if not os.path.isfile(config_path):
     config = configparser.ConfigParser()
 
     config.add_section('main')
     config.set('main', 'enable_scaler', 'True')
     config.set('main', 'screen_width_mm', '300')
     config.set('main', 'y_offset', '0')
-    #config.set('main', 'disp_angle', '0')
 
     # Write to config.ini with above settings
-    with open('config.ini', 'w') as configfile:
+    with open(config_path) as configfile:
         config.write(configfile)
     print("Config file created")
 
-config.read('config.ini')
+config.read(config_path)
 
 # Whether or not to compensate for an angle diffrence between the sensor and display
 enable_scaler = config.getboolean('main', 'enable_scaler')
@@ -75,6 +77,8 @@ else:
     enable_scaler_print = "OFF"
 print("Y axis scaler is",enable_scaler_print)
 
+screen_width_mm_scaled = screen_width_mm * 0.5
+screen_width_mm_inverted = 0 - screen_width_mm_scaled
 class SampleListener(Leap.Listener):
 
     def on_connect(self, controller):
@@ -104,7 +108,7 @@ class SampleListener(Leap.Listener):
                 y_scale = 1
 
             # Position the cursor
-            set_pos(int(interp(Point.x,[0 - screen_width_mm * 0.5,screen_width_mm * 0.5],[0,screen_width])),\
+            set_pos(int(interp(Point.x,[screen_width_mm_inverted,screen_width_mm_scaled],[0,screen_width])),\
                     int(interp(Point.y - y_offset,[0,screen_height_mm * y_scale],[screen_height,0])))
             sync() # This does nothing on Windows
 
